@@ -15,6 +15,7 @@ class Game extends Produk
     {
         return $this->harga;
     }
+    
     // Method khusus Game
     public function getInfoProduk()
     {
