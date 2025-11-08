@@ -33,15 +33,20 @@
                         <!-- Menampilkan email dengan sanitasi HTML -->
                         <td><?= htmlspecialchars($user['email']); ?></td>
 
-                        <!-- Link untuk melihat detail pengguna berdasarkan ID -->
-                        <td><a href="index.php?id=<?= $user['id']; ?>" class="btn-small">Detail</a></td>
+                        <td><a href="<?= BASEURL; ?>/user/edit/<?= $user['id']; ?>" class="badge bg-success text-decoration-none">Edit</a></td>
+                        <td><a href="<?= BASEURL; ?>/user/hapus/<?= $user['id']; ?>" class="badge bg-danger text-decoration-none" onclick="return confirm('Yakin ingin menghapus data ini?');">Hapus</a></td>
+                        <td><a href="<?= BASEURL; ?>/user/detail/<?= $user['id']; ?>" class="badge bg-primary text-decoration-none">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
 
             </tbody>
         </table>
 
-        <a href="<?= BASEURL; ?>/user/tambah">Tambah</a>
+        <a type="button" href="<?= BASEURL; ?>/user/tambah" class="btn btn-primary mb-3">
+            Tambah User
+        </a>
+
+        <?php Flasher::flash(); ?>
 
     </div>
 </body>

@@ -34,21 +34,39 @@ class User_model
         return $this->db->single();
     }
 
-    // Tambahkan di dalam class User_model
-    // File: app/models/User_model.php (Tambahkan method ini)
-
-    public function tambahDataUser($data)
+    public function tambahUser($data)
     {
-        // Pastikan kolom yang diisi sama dengan kolom di database Anda (asumsi: id, name, email)
-        $query = "INSERT INTO " . $this->table . " (name, email) 
-              VALUES (:name, :email)";
-
+        $query = "INSERT INTO users (name, email) VALUES (:name, :email)";
         $this->db->query($query);
 
-        // Binding data menggunakan data dari POST
-        // Gunakan filter_var atau trim untuk sanitasi sederhana
-        $this->db->bind('name', htmlspecialchars($data['name']));
-        $this->db->bind('email', htmlspecialchars($data['email']));
+        $this->db->bind('name', $data['name']);
+        $this->db->bind('email', $data['email']);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
+
+    public function editUser($data)
+    {
+        $query = "UPDATE users SET name = :name, email = :email WHERE id = :id";
+        $this->db->query($query);
+
+        $this->db->bind('name', $data['name']);
+        $this->db->bind('email', $data['email']);
+        $this->db->bind('id', $data['id']);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
+
+    public function hapusUser($id)
+    {
+        $query = "DELETE FROM users WHERE id = :id";
+
+        $this->db->query($query);
+        $this->db->bind('id', $id);
 
         $this->db->execute();
 

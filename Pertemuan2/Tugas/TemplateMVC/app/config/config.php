@@ -1,5 +1,10 @@
 <?php
 
+//session agar flasher dapat bekerja
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 define("BASEURL", "http://localhost/PrakWeb2025_F_233040071/Pertemuan2/Tugas/TemplateMVC/public/");
 
 // DATANASE

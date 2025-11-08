@@ -18,7 +18,7 @@
         <p>Email: <?= htmlspecialchars($user['email']); ?></p>
 
         <!-- Link untuk kembali ke halaman daftar pengguna -->
-        <a href="index.php" class="btn">Kembali ke Daftar</a>
+        <a href="<?= BASEURL; ?>/user" class="btn btn-secondary">Kembali ke Daftar</a>
 
     </div>
 </body>

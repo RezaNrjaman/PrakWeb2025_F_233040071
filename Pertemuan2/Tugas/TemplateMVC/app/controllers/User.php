@@ -11,7 +11,9 @@ class User extends Controller
     {
         $data["judul"] = "Data user";
         $data['users'] = $this->model('User_model')->getAllUsers();
+        $this->view('templates/header');
         $this->view('list', $data);
+        $this->view('templates/footer', $data);
     }
 
     // Tampilkan detail user berdasarkan id
@@ -19,31 +21,88 @@ class User extends Controller
     {
         $data["judul"] = "Detail user";
         $data['user'] = $this->model('User_model')->getUserById($id);
+
         $this->view('detail', $data);
+        $this->view('templates/footer', $data);
     }
 
-    // Tambahkan di dalam class User
     public function tambah()
     {
-        // Pengecekan apakah request yang datang adalah POST
+        //mengecek requet yg masuk merupakan POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Proses Insert Data
-            if ($this->model('User_model')->tambahDataUser($_POST) > 0) {
-                Flasher::setFlash('berhasil', 'ditambahkan', 'success');
-                header('Location: ' . BASEURL . 'user');
+
+            //memanggil method tambahUser pada User_model
+            if ($this->model('User_model')->tambahUser($_POST) > 0) {
+                //Set Flaher untuk pesan sukses
+                Flasher::setFlash('BERHASIL', 'ditambahkan', 'sukses');
+                //Kembalikan kehalaman user
+                header('Location: ' . BASEURL . '/user');
                 exit;
             } else {
-                Flasher::setFlash('gagal', 'ditambahkan', 'danger');
-                header('Location: ' . BASEURL . 'user');
+                //set flasher untuk pesan gagal
+                Flasher::setFlash('Gagal!', 'ditambahkan', 'danger');
+                //kembalikan kehalaman user
+                header('Location: ' . BASEURL . "/user");
                 exit;
             }
         } else {
-            // Jika request bukan POST (misal GET), tampilkan halaman form
-            $data['judul'] = 'Tambah User';
-            // Asumsi Anda membuat view baru untuk form input
+            $data["judul"] = "Tambah Data User";
+
             $this->view('templates/header', $data);
-            $this->view('user/tambah', $data); // Buat file views/user/tambah.php
-            $this->view('templates/footer');
+            $this->view('tambah', $data);
+            $this->view('templates/footer', $data);
+        }
+    }
+
+    public function edit($id)
+    {
+        $data["judul"] = "Edit Data User";
+        $data['user'] = $this->model('User_model')->getUserById($id);
+
+        $this->view('templates/header', $data);
+        $this->view('edit', $data);
+        $this->view('templates/footer', $data);
+    }
+
+    public function update()
+    {
+        //mengecek requet yg masuk merupakan POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            //memanggil method tambahUser pada User_model
+            if ($this->model('User_model')->editUser($_POST) > 0) {
+                //Set Flaher untuk pesan sukses
+                Flasher::setFlash('BERHASIL', 'diubah', 'sukses');
+                //Kembalikan kehalaman user
+                header('Location: ' . BASEURL . '/user');
+                exit;
+            } else {
+                //set flasher untuk pesan gagal
+                Flasher::setFlash('Gagal!', 'diubah', 'danger');
+                //kembalikan kehalaman user
+                header('Location: ' . BASEURL . "/user");
+                exit;
+            }
+        } else {
+            header('Location: ' . BASEURL . '/user');
+        }
+    }
+
+    public function hapus($id)
+    {
+        //memanggil method hapusUser pada User_model
+        if ($this->model('User_model')->hapusUser($id) > 0) {
+            //Set Flaher untuk pesan sukses
+            Flasher::setFlash('BERHASIL', 'dihapus', 'sukses');
+            //Kembalikan kehalaman user
+            header('Location: ' . BASEURL . '/user');
+            exit;
+        } else {
+            //set flasher untuk pesan gagal
+            Flasher::setFlash('Gagal!', 'dihapus', 'danger');
+            //kembalikan kehalaman user
+            header('Location: ' . BASEURL . "/user");
+            exit;
         }
     }
 }
