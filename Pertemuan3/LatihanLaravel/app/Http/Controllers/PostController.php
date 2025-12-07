@@ -10,7 +10,14 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['author', 'category'])->get();
         return view('posts', compact('posts'));
+    }
+
+    // route model binding untuk single post page
+    public function show(Post $post)
+    {
+        $post->load(['author', 'category']);
+        return view('post', compact('post'));
     }
 }

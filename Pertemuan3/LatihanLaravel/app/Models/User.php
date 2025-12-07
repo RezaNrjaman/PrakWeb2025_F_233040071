@@ -49,8 +49,8 @@ class User extends Authenticatable
     }
 
     // Relasi one-to-many dengan model Post
-    public function posts(): HasMany
+    public function posts()
     {
-        return $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Post::class);
     }
 }

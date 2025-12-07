@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{--  Tambahkan slot baru dengan nama $title --}}
     <title>{{  $title }}</title>
+
+    @vite('resources/css/app.css')
 </head>
 <body>
     <nav>
